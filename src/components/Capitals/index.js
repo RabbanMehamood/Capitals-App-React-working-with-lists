@@ -1,5 +1,7 @@
 import {Component} from 'react'
 
+import './index.css'
+
 const countryAndCapitalsList = [
   {
     id: 'NEW_DELHI',
@@ -28,7 +30,6 @@ const countryAndCapitalsList = [
   },
 ]
 
-// Write your code here
 class Capitals extends Component {
   state = {
     activeCapitalId: countryAndCapitalsList[0].id,
@@ -37,11 +38,14 @@ class Capitals extends Component {
   onChangeCapital = event => {
     this.setState({activeCapitalId: event.target.value})
   }
+
   getCountry = () => {
     const {activeCapitalId} = this.state
+
     const activeCountryAndCapital = countryAndCapitalsList.find(
-      eachObject => eachObject.id === activeCapitalId,
+      eachCapital => eachCapital.id === activeCapitalId,
     )
+
     return activeCountryAndCapital.country
   }
 
@@ -49,24 +53,32 @@ class Capitals extends Component {
     const {activeCapitalId} = this.state
     const country = this.getCountry(activeCapitalId)
     return (
-      <div>
-        <h1>Countries and Capitals</h1>
-        <select
-          name="countries"
-          onChange={this.onChangeCapital}
-          value={activeCapitalId}
-        >
-          {countryAndCapitalsList.map(eachObject => (
-            <option value={eachObject.id} key={eachObject.id}>
-              {eachObject.capitalDisplayText}
-            </option>
-          ))}
-        </select>
-        <p> is capital of which country?</p>
-        <br />
-        <p>{country}</p>
+      <div className="app-container">
+        <div className="capitals-container">
+          <h1 className="heading">Countries and Capitals</h1>
+          <div className="questions-container">
+            <select
+              className="capital-select"
+              onChange={this.onChangeCapital}
+              value={activeCapitalId}
+            >
+              {countryAndCapitalsList.map(eachCapital => (
+                <option
+                  key={eachCapital.id}
+                  value={eachCapital.id}
+                  className="option"
+                >
+                  {eachCapital.capitalDisplayText}
+                </option>
+              ))}
+            </select>
+            <p className="question">is capital of which country?</p>
+          </div>
+          <p className="country">{country}</p>
+        </div>
       </div>
     )
   }
 }
+
 export default Capitals
